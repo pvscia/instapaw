@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class ComplaintController {
 
     private final ComplaintService complaintService;
 
-    // CREATE
     @PostMapping("/")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Complaint> create(
             @AuthenticationPrincipal User user,
             @RequestBody Complaint req
@@ -31,8 +32,8 @@ public class ComplaintController {
         );
     }
 
-    // GET MY COMPLAINTS
     @GetMapping("/my")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Complaint>> myComplaints(
             @AuthenticationPrincipal User user
     ) {
@@ -41,16 +42,16 @@ public class ComplaintController {
         );
     }
 
-    // GET ALL (optional: admin only later)
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Complaint>> allComplaints() {
         return ResponseEntity.ok(
                 complaintService.getAllComplaints()
         );
     }
 
-    // UPDATE
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Complaint> update(
             @PathVariable Long id,
             @AuthenticationPrincipal User user,
@@ -61,8 +62,8 @@ public class ComplaintController {
         );
     }
 
-    // DELETE
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> delete(
             @PathVariable Long id,
             @AuthenticationPrincipal User user

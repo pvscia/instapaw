@@ -6,12 +6,13 @@ import org.springframework.stereotype.Service;
 import com.example.instapaws.model.AuthResult;
 import com.example.instapaws.model.User;
 import com.example.instapaws.repository.UserRepository;
+import com.example.instapaws.utils.Role;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -25,6 +26,7 @@ public class UserService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
+        user.setRole(Role.USER);
 
         userRepository.save(user);
         return new AuthResult(true, "User registered successfully", user);

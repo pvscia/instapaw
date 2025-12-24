@@ -3,8 +3,9 @@ package com.example.instapaws.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
+
+import com.example.instapaws.utils.Role;
 
 @Entity
 @Table(name = "users")
@@ -17,9 +18,12 @@ public class User {
 
     private String username;
     private String password;
-    private int role = 1;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
-
+    
 }

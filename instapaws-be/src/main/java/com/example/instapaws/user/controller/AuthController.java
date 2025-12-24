@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.instapaws.model.AuthResult;
-import com.example.instapaws.user.service.UserService;
+import com.example.instapaws.user.service.AuthService;
 import com.example.instapaws.utils.JwtUtil;
 
 import lombok.Data;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
 
-	private final UserService userService;
+	private final AuthService userService;
 	private final JwtUtil jwtUtil;
 
 	@PostMapping("/register")

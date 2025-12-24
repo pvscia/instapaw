@@ -5,6 +5,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -65,13 +68,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Tell Spring Security this user is authenticated
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(
-                        user,
-                        null,
-                        List.of()
-                );
+        	    new UsernamePasswordAuthenticationToken(
+        	        user,
+        	        null,
+        	        List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+        	    );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
