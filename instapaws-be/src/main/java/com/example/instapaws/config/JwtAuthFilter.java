@@ -32,6 +32,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
+    	
+    	String path = request.getServletPath();
+
+        // ✅ Skip auth endpoints
+        if (path.startsWith("/auth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String authHeader = request.getHeader("Authorization");
 
@@ -48,10 +56,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        BigInteger userId = jwtUtil.getIdFromJwtToken(token);
+        Long userId = jwtUtil.getIdFromJwtToken(token);
         User user = userRepository.findById(userId)
                 .orElse(null);
-
+        
         if (user == null) {
             sendUnauthorized(response, "User not found");
             return;

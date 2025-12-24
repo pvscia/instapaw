@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.example.instapaws.model.User;
 
 
-public interface UserRepository extends JpaRepository<User, BigInteger>,JpaSpecificationExecutor<User>{
+public interface UserRepository extends JpaRepository<User, Long>,JpaSpecificationExecutor<User>{
     Optional<User> findByUsername(String username);
 
 }

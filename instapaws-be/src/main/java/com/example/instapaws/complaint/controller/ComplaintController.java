@@ -21,7 +21,7 @@ public class ComplaintController {
     private final ComplaintService complaintService;
 
     // CREATE
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Complaint> create(
             @AuthenticationPrincipal User user,
             @RequestBody Complaint req
@@ -52,7 +52,7 @@ public class ComplaintController {
     // UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<Complaint> update(
-            @PathVariable BigInteger id,
+            @PathVariable Long id,
             @AuthenticationPrincipal User user,
             @RequestBody Complaint req
     ) {
@@ -64,7 +64,7 @@ public class ComplaintController {
     // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable BigInteger id,
+            @PathVariable Long id,
             @AuthenticationPrincipal User user
     ) {
         complaintService.deleteComplaint(id, user);

@@ -34,9 +34,9 @@ public class JwtUtil {
 				.signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
 	}
 
-	public BigInteger getIdFromJwtToken(String token) {
+	public Long getIdFromJwtToken(String token) {
 		Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
-		return new BigInteger(claims.getSubject().split("_")[0]);
+		return Long.parseLong(claims.getSubject().split("_")[0]);
 	}
 	
 

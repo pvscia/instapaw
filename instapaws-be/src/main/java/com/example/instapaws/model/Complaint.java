@@ -13,7 +13,10 @@ public class Complaint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long id;
+    
+    @Column(name = "user_id")
+    private Long userId;
 
     private String complaint;
 
@@ -23,7 +26,7 @@ public class Complaint {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+//    private User user;
 }

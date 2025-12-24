@@ -1,19 +1,13 @@
 package com.example.instapaws.complaint.service;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.instapaws.model.AuthResult;
 import com.example.instapaws.model.Complaint;
 import com.example.instapaws.model.User;
 import com.example.instapaws.repository.ComplaintRepository;
-import com.example.instapaws.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,11 +19,11 @@ public class ComplaintService {
     public Complaint createComplaint(User user, Complaint req) {
         Complaint c = new Complaint();
         c.setComplaint(req.getComplaint());
-        c.setUser(user);
+        c.setUserId(user.getId());
         return complaintRepository.save(c);
     }
 
-    public List<Complaint> getUserComplaints(BigInteger userId) {
+    public List<Complaint> getUserComplaints(Long userId) {
         return complaintRepository.findByUserId(userId);
     }
     
@@ -37,11 +31,11 @@ public class ComplaintService {
         return complaintRepository.findAll();
     }
 
-    public Complaint updateComplaint(BigInteger id, User user, Complaint req) {
+    public Complaint updateComplaint(Long id, User user, Complaint req) {
         Complaint c = complaintRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Not found"));
 
-        if (!c.getUser().getId().equals(user.getId())) {
+        if (!c.getUserId().equals(user.getId())) {
             throw new RuntimeException("Forbidden");
         }
 
@@ -50,11 +44,11 @@ public class ComplaintService {
         return complaintRepository.save(c);
     }
     
-    public void deleteComplaint(BigInteger id, User user) {
+    public void deleteComplaint(Long id, User user) {
         Complaint c = complaintRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Not found"));
 
-        if (!c.getUser().getId().equals(user.getId())) {
+        if (!c.getUserId().equals(user.getId())) {
             throw new RuntimeException("Forbidden");
         }
 

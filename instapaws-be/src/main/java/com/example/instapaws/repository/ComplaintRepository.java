@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.example.instapaws.model.Complaint;
 
 
-public interface ComplaintRepository extends JpaRepository<Complaint, BigInteger>,JpaSpecificationExecutor<Complaint>{
-    List<Complaint> findByUserId(BigInteger userId);
+public interface ComplaintRepository extends JpaRepository<Complaint, Long>,JpaSpecificationExecutor<Complaint>{
+    List<Complaint> findByUserId(Long userId);
 
 }
