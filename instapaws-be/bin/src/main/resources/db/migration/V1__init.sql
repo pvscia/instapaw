@@ -12,7 +12,6 @@ CREATE TABLE complaints (
     user_id BIGINT NOT NULL,
     complaint VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    modified_at TIMESTAMP,
     CONSTRAINT fk_user
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE

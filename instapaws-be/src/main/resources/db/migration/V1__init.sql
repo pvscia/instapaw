@@ -17,3 +17,17 @@ CREATE TABLE complaints (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+INSERT INTO users (username, password, role)
+VALUES
+(
+  'user',
+  '$2a$10$ktQ8620O4bB4OV3i8w7YNeC/VH5ipoYd.05KDvev5DkyvWIjG/g7G',
+  'USER'
+),
+(
+  'admin',
+  '$2a$10$9URBjQqnrlt6SCKZchq0KecIzRgtaWCnDskbQKwjw4Qemq7/ccmEy',
+  'ADMIN'
+);
+

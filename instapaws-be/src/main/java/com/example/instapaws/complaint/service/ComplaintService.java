@@ -41,7 +41,6 @@ public class ComplaintService {
         }
 
         c.setComplaint(req.getComplaint());
-        c.setModifiedAt(LocalDateTime.now());
         return complaintRepository.save(c);
     }
     
