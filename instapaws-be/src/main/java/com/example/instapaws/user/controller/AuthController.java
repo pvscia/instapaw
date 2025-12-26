@@ -1,12 +1,15 @@
 package com.example.instapaws.user.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.instapaws.model.AuthResult;
+import com.example.instapaws.model.User;
 import com.example.instapaws.user.service.AuthService;
 import com.example.instapaws.utils.JwtUtil;
 
@@ -42,9 +45,28 @@ public class AuthController {
 			return ResponseEntity.status(401).body(result.getMessage());
 		}
 
-		String token = jwtUtil.generateJwtToken(result.getUser());
-		return ResponseEntity.ok(new AuthResponse(token));
+		User user = result.getUser();
+		user.setPassword(null);
+		String token = jwtUtil.generateJwtToken(user);
+		return ResponseEntity.ok(new AuthResponse(token,user));
 	}
+	
+	@GetMapping("/me")
+	public ResponseEntity<?> getUser(
+	        @RequestHeader("Authorization") String authHeader
+	) {
+	    String token = authHeader.replace("Bearer ", "");
+
+	    Long id = jwtUtil.getIdFromJwtToken(token);
+
+	    AuthResult result = userService.getUser(id);
+	    if (!result.isSuccess()) {
+	        return ResponseEntity.status(401).body(result.getMessage());
+	    }
+
+	    return ResponseEntity.ok(result.getUser());
+	}
+
 
 	@Data
 	static class AuthRequest {
@@ -55,5 +77,6 @@ public class AuthController {
 	@Data
 	static class AuthResponse {
 		private final String token;
+		private final User user;
 	}
 }

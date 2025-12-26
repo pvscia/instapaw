@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.instapaws.complaint.service.ComplaintService;
+import com.example.instapaws.complaint.vo.VoComplaint;
 import com.example.instapaws.model.Complaint;
 import com.example.instapaws.model.User;
 
@@ -34,7 +35,7 @@ public class ComplaintController {
 
     @GetMapping("/my")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Complaint>> myComplaints(
+    public ResponseEntity<List<VoComplaint>> myComplaints(
             @AuthenticationPrincipal User user
     ) {
         return ResponseEntity.ok(
@@ -44,7 +45,7 @@ public class ComplaintController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Complaint>> allComplaints() {
+    public ResponseEntity<List<VoComplaint>> allComplaints() {
         return ResponseEntity.ok(
                 complaintService.getAllComplaints()
         );

@@ -38,7 +38,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     	
     	String path = request.getServletPath();
 
-        // ✅ Skip auth endpoints
         if (path.startsWith("/auth/")) {
             filterChain.doFilter(request, response);
             return;
@@ -46,7 +45,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // No token → continue, Spring will block later if needed
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;

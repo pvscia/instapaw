@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.instapaws.complaint.vo.VoComplaint;
 import com.example.instapaws.model.Complaint;
 import com.example.instapaws.model.User;
 import com.example.instapaws.repository.ComplaintRepository;
@@ -23,12 +24,12 @@ public class ComplaintService {
         return complaintRepository.save(c);
     }
 
-    public List<Complaint> getUserComplaints(Long userId) {
+    public List<VoComplaint> getUserComplaints(Long userId) {
         return complaintRepository.findByUserId(userId);
     }
     
-    public List<Complaint> getAllComplaints() {
-        return complaintRepository.findAll();
+    public List<VoComplaint> getAllComplaints() {
+        return complaintRepository.getAll();
     }
 
     public Complaint updateComplaint(Long id, User user, Complaint req) {
