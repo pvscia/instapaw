@@ -16,7 +16,12 @@ export default function ModalComplaint(props) {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit(complaint);
+            if (!complaint || complaint.trim() === "") {
+              alert("Must fill complaint");
+            } else {
+              handleSubmit(complaint);
+            }
+
           }}
         >
 
