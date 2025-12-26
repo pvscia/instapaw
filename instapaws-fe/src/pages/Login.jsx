@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import ModalStatus from "../components/ModalStatus";
+
 
 export default function Login() {
     const { login, register } = useAuth();
